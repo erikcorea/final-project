@@ -1,5 +1,8 @@
 from rest_framework import permissions
 class IsOwnerOrReadOnly(permissions.BasePermission):
+    # def __init__(self, allowed_methods):
+    #     super().__init__()
+    #     self.allowed_methods = allowed_methods
     """
     Custom permission to only allow owners of an object to edit it.
     """

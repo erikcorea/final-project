@@ -5,23 +5,21 @@ from .models import Post, Author
 from .serializers import PostSerializer, AuthorSerializer
 from django.http import HttpResponseRedirect
 
-# class PostViewSet(viewsets.ModelViewSet):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-class PostList(generics.ListCreateAPIView):
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permissions_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permissions_classes = [IsOwnerOrReadOnly]
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+        elif self.action == 'create':
+            permission_classes = [permissions.IsAuthenticated]
+        elif self.action == 'update' or self.action == 'destroy' or self.action == 'partial_update':
+            permission_classes = [IsOwnerOrReadOnly]
+        else:
+            permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+        return [permission() for permission in permission_classes]
 
 class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
