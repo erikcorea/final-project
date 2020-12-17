@@ -13,6 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    photo = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post', default="")
 
     def __str__(self):
         return self.title
