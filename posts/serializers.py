@@ -5,14 +5,13 @@ class PostSerializer(serializers.ModelSerializer):
         source='author.username',
         read_only=True
     )
-
-    photo = serializers.ReadOnlyField(
-        source='photo.avatar',
-        read_only=True
-    )
+    # photo = serializers.ReadOnlyField(
+    #     source='author.avatar',
+    #     read_only=True
+    # )
     class Meta:
         model = Post
-        fields = ('id', 'title', 'description', 'author','photo')
+        fields = ('id', 'title', 'description', 'author', 'needed_skills')
 class AuthorSerializer(serializers.ModelSerializer):
     posts = PostSerializer(many=True, read_only=True)
     class Meta:

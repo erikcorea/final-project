@@ -149,8 +149,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = 'images/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -158,5 +156,3 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL='blog_users.User'
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
